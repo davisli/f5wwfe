@@ -1,0 +1,8 @@
+POST https://192.168.1.22/mgmt/shared/authn/login HTTP/1.1
+Content-Type: application/application/json
+
+{
+  "username": "admin",
+  "password": "123$qweRasdF",
+  "loginProviderName": "local"
+}

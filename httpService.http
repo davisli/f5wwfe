@@ -1,0 +1,57 @@
+POST https://10.1.1.4/mgmt/shared/appsvcs/declare?async=true HTTP/1.1
+Content-Type: application/application/json
+
+{
+    "class": "AS3",
+    "action": "deploy",
+    "persist": true,
+    "declaration": {
+        "class": "ADC",
+        "schemaVersion": "3.7.0",
+        "id": "example-declaration-01",
+        "label": "Task1",
+        "remark": "Task 1 - HTTP Application Service",
+        "target": {
+            "address":  "<BIG-IP ip address>"  //Enter BIGIP IP address provided by Networks team. (Target F5 BIGIP Instance)
+        },
+        "Task1": {
+            "class": "Tenant",
+            "MyWebApp1http": {
+                "class": "Application",
+                "template": "http",
+                "statsProfile": {
+                    "class": "Analytics_Profile",
+                    "collectClientSideStatistics": true,
+                    "collectOsAndBrowser": false,
+                    "collectMethod": false
+                },
+                "serviceMain": {
+                    "class": "Service_HTTP",
+                    "virtualAddresses": [
+                        "<virtual>" //Enter Virtual Server IP provided by Networks team. ("Listener service")
+                    ],
+                    "pool": "web_pool",
+                    "profileAnalytics": {
+                        "use": "statsProfile"
+                    }
+                },
+                "web_pool": {
+                    "class": "Pool",
+                    "monitors": [
+                        "http"
+                    ],
+                    "members": [
+                        {
+                            "servicePort": 80,
+                            "serverAddresses": [
+                                "<node1>",
+                                "<node2>"
+                            ],
+                            "shareNodes": true
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

@@ -1,4 +1,5 @@
-POST https://10.1.1.4/mgmt/shared/appsvcs/declare?async=true HTTP/1.1
+POST https://192.168.1.22/mgmt/shared/appsvcs/declare?async=true HTTP/1.1
+X-F5-Auth-Token: 
 Content-Type: application/application/json
 
 {
